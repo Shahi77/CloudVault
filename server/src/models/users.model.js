@@ -1,16 +1,12 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import { generateToken } from "../utils/jwt";
+import { generateToken } from "../utils/jwt.js";
 
 const userSchema = new mongoose.Schema(
   {
-    username: {
+    fullName: {
       type: String,
       required: true,
-      unique: true,
-      lowercase: true,
-      trim: true,
-      index: true,
     },
     email: {
       type: String,
@@ -20,16 +16,12 @@ const userSchema = new mongoose.Schema(
       trim: true,
       index: true,
     },
-    image: {
-      type: String,
-    },
     password: {
       type: String,
       required: [true, "Password is required"],
     },
     refreshToken: {
       type: String,
-      required: true,
     },
   },
   { timestamps: true }

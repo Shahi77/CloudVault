@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import { generateToken } from "../utils/jwt";
+import { generateToken } from "../utils/jwt.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -20,16 +20,12 @@ const userSchema = new mongoose.Schema(
       trim: true,
       index: true,
     },
-    avatar: {
-      type: String,
-    },
     password: {
       type: String,
       required: [true, "Password is required"],
     },
     refreshToken: {
       type: String,
-      required: true,
     },
   },
   { timestamps: true }

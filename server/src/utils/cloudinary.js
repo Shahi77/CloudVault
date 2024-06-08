@@ -1,23 +1,16 @@
-import cloudinary from "../config/cloudinary.js";
+import cloudinary from "../config/cloudinary.config.js";
 import fs from "fs";
 
-const uploadOnCloudinary = async (localFilePath, isAvatar) => {
+const uploadOnCloudinary = async (localFilePath) => {
   try {
     if (!localFilePath) {
       return null;
     }
-    let response;
-    if (isAvatar) {
-      response = await cloudinary.uploader.upload(localFilePath, {
-        folder: "cloud-vault/avatars",
-        resource_type: "auto",
-      });
-    } else {
-      response = await cloudinary.uploader.upload(localFilePath, {
-        folder: "cloud-vault/files",
-        resource_type: "auto",
-      });
-    }
+
+    const response = await cloudinary.uploader.upload(localFilePath, {
+      folder: "cloud-vault/files",
+      resource_type: "auto",
+    });
 
     fs.unlinkSync(localFilePath);
     return response;
@@ -27,13 +20,9 @@ const uploadOnCloudinary = async (localFilePath, isAvatar) => {
   }
 };
 
-const deleteFileOnCloudinary = async (cloudinaryId, isAvatar) => {
+const deleteFileOnCloudinary = async (cloudinaryId) => {
   try {
-    if (isAvatar) {
-      await cloudinary.uploader.destroy(`cloud-vault/avatars/${cloudinaryId}`);
-    } else {
-      await cloudinary.uploader.destroy(`cloud-vault/files/${cloudinaryId}`);
-    }
+    await cloudinary.uploader.destroy(`cloud-vault/files/${cloudinaryId}`);
   } catch (error) {
     console.log(`Error while deleting file: ${error}`);
   }

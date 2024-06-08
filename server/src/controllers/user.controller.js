@@ -22,26 +22,26 @@ const generateAccessAndRefreshTokens = async (userId) => {
 };
 
 const handleSignup = asyncHandler(async (req, res) => {
-  const { username, email, password } = req.body;
+  const { fullName, email, password } = req.body;
   if (
-    [username, email, password].some(
+    [fullName, email, password].some(
       (field) => field == null || field.trim() === ""
     )
   ) {
-    throw new ApiError(400, "Username, email & Password are required fields");
+    throw new ApiError(400, "Full name, email & Password are required fields");
   }
 
   if (!EMAIL_REGEX.test(email)) {
     throw new ApiError(400, "Enter a valid email");
   }
 
-  const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+  const existingUser = await User.findOne({ $or: [{ fullName }, { email }] });
   if (existingUser) {
-    throw new ApiError(409, "User with username or email already exists");
+    throw new ApiError(409, "User with email already exists");
   }
 
   const user = await User.create({
-    username: username,
+    fullName: fullName,
     email: email,
     password: password,
   });
@@ -62,7 +62,7 @@ const handleSignup = asyncHandler(async (req, res) => {
       new ApiResponse(
         {
           id: user._id,
-          username: user.username,
+          fullName: user.fullName,
           email: user.email,
         },
         "User registered successfully"

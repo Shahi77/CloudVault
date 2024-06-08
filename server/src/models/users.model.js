@@ -4,13 +4,9 @@ import { generateToken } from "../utils/jwt.js";
 
 const userSchema = new mongoose.Schema(
   {
-    username: {
+    fullName: {
       type: String,
       required: true,
-      unique: true,
-      lowercase: true,
-      trim: true,
-      index: true,
     },
     email: {
       type: String,

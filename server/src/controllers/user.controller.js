@@ -35,7 +35,7 @@ const handleSignup = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Enter a valid email");
   }
 
-  const existingUser = await User.findOne({ $or: [{ fullName }, { email }] });
+  const existingUser = await User.findOne({ email: email });
   if (existingUser) {
     throw new ApiError(409, "User with email already exists");
   }
@@ -71,7 +71,43 @@ const handleSignup = asyncHandler(async (req, res) => {
 });
 
 const handleLogin = asyncHandler(async (req, res) => {
-  console.log(`login is working fine`);
+  const { email, password } = req.body;
+  if ([email, password].some((field) => field == null || field.trim() === "")) {
+    throw new ApiError(400, "Please enter an email and password to login");
+  }
+
+  if (!EMAIL_REGEX.test(email)) {
+    throw new ApiError(400, "Enter a valid email");
+  }
+
+  const user = await User.findOne({ email: email });
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  const isPasswordCorrect = await user.isPasswordCorrect(password);
+  if (!isPasswordCorrect) {
+    throw new ApiError(401, "Wrong password");
+  }
+
+  const { accessToken, refreshToken } = generateAccessAndRefreshTokens(
+    user._id
+  );
+
+  return res
+    .status(200)
+    .cookie("accessToken", accessToken, AUTH_COOKIE_OPTIONS)
+    .cookie("refreshToken", refreshToken, AUTH_COOKIE_OPTIONS)
+    .json(
+      new ApiResponse(
+        {
+          id: user._id,
+          fullName: user.fullName,
+          email: user.email,
+        },
+        "Logged in successfully"
+      )
+    );
 });
 
 export { handleSignup, handleLogin };

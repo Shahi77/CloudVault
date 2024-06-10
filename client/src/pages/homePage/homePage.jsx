@@ -9,27 +9,30 @@ export default function HomePage() {
   };
 
   return (
-    <div className="radio-inputs">
-      <label className="radio">
-        <input
-          type="radio"
-          name="radio"
-          value="upload"
-          checked={selectedOption === "upload"}
-          onChange={handleOptionChange}
-        />
-        <span className="name">Upload</span>
-      </label>
-      <label className="radio">
-        <input
-          type="radio"
-          name="radio"
-          value="search"
-          checked={selectedOption === "search"}
-          onChange={handleOptionChange}
-        />
-        <span className="name">Search</span>
-      </label>
+    <div className="radio-inputs-container">
+      <h2>Secure upload and instant search</h2>
+      <div className="radio-inputs">
+        <label className="radio">
+          <input
+            type="radio"
+            name="radio"
+            value="upload"
+            checked={selectedOption === "upload"}
+            onChange={handleOptionChange}
+          />
+          <span className="name">Upload</span>
+        </label>
+        <label className="radio">
+          <input
+            type="radio"
+            name="radio"
+            value="search"
+            checked={selectedOption === "search"}
+            onChange={handleOptionChange}
+          />
+          <span className="name">Search</span>
+        </label>
+      </div>
     </div>
   );
 }

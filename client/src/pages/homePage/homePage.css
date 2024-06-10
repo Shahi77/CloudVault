@@ -1,3 +1,11 @@
+.radio-inputs-container {
+    text-align: center;
+    margin: 200px;
+    font-size:30px;
+    
+}
+
+
 .radio-inputs {
     position: absolute;
     top: 50%;

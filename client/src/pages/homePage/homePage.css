@@ -1,5 +1,8 @@
 .radio-inputs {
-    position: relative;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     display: flex;
     flex-wrap: wrap;
     border-radius: 0.5rem;
@@ -8,7 +11,7 @@
     box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
     padding: 0.25rem;
     width: 400px;
-    font-size: 14px;
+    font-size: 24px;
 }
 
 .radio-inputs .radio {

@@ -1,3 +1,4 @@
+import jwt from "jsonwebtoken";
 import asyncHandler from "../utils/asyncHandler.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
@@ -7,8 +8,8 @@ import { generateToken } from "../utils/jwt.js";
 import { AUTH_COOKIE_OPTIONS } from "../config/cookies.config.js";
 
 const generateAccessAndRefreshTokens = async (userId) => {
-  const accessToken = generateToken(userId, true);
-  const refreshToken = generateToken(userId, false);
+  const generatedAccessToken = generateToken(userId, true);
+  const generatedRefreshToken = generateToken(userId, false);
 
   await User.updateOne(
     { _id: userId },
@@ -17,7 +18,7 @@ const generateAccessAndRefreshTokens = async (userId) => {
     }
   );
 
-  return { accessToken, refreshToken };
+  return { generatedAccessToken, generatedRefreshToken };
 };
 
 const handleSignup = asyncHandler(async (req, res) => {
@@ -49,14 +50,13 @@ const handleSignup = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Error while registering the user");
   }
 
-  const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
-    user._id
-  );
+  const { generatedAccessToken, generatedRefreshToken } =
+    await generateAccessAndRefreshTokens(user._id);
 
   return res
     .status(201)
-    .cookie("accessToken", accessToken, AUTH_COOKIE_OPTIONS)
-    .cookie("refreshToken", refreshToken, AUTH_COOKIE_OPTIONS)
+    .cookie("accessToken", generatedAccessToken, AUTH_COOKIE_OPTIONS)
+    .cookie("refreshToken", generatedRefreshToken, AUTH_COOKIE_OPTIONS)
     .json(
       new ApiResponse(
         {
@@ -89,14 +89,13 @@ const handleLogin = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Wrong password");
   }
 
-  const { accessToken, refreshToken } = generateAccessAndRefreshTokens(
-    user._id
-  );
+  const { generatedAccessToken, generatedRefreshToken } =
+    generateAccessAndRefreshTokens(user._id);
 
   return res
     .status(200)
-    .cookie("accessToken", accessToken, AUTH_COOKIE_OPTIONS)
-    .cookie("refreshToken", refreshToken, AUTH_COOKIE_OPTIONS)
+    .cookie("accessToken", generatedAccessToken, AUTH_COOKIE_OPTIONS)
+    .cookie("refreshToken", generatedRefreshToken, AUTH_COOKIE_OPTIONS)
     .json(
       new ApiResponse(
         {
@@ -109,4 +108,45 @@ const handleLogin = asyncHandler(async (req, res) => {
     );
 });
 
-export { handleSignup, handleLogin };
+const handleRefreshTokens = asyncHandler(async (req, res) => {
+  const { refreshToken } = req.cookies;
+  if (!refreshToken) {
+    throw new ApiError(401, "Unauthorized Request");
+  }
+
+  try {
+    const decodedToken = jwt.verify(
+      refreshToken,
+      process.env.REFRESH_TOKEN_SECRET
+    );
+
+    const user = await User.findById(decodedToken.userId);
+    if (!user) {
+      throw new ApiError(401, "Unauthorized Request");
+    }
+
+    if (user.refreshToken !== refreshToken) {
+      throw new ApiError(401, "Refresh Token Expired");
+    }
+
+    const { generatedAccessToken, generatedRefreshToken } =
+      await generateAccessAndRefreshTokens(user.id);
+
+    res
+      .status(200)
+      .cookie("accessToken", generatedAccessToken, AUTH_COOKIE_OPTIONS)
+      .cookie("refreshToken", generatedRefreshToken, AUTH_COOKIE_OPTIONS)
+      .json(
+        new ApiResponse(
+          {
+            accessToken: generatedAccessToken,
+          },
+          "Refreshed tokens successfully"
+        )
+      );
+  } catch (error) {
+    throw new ApiError(401, "Invalid refresh token");
+  }
+});
+
+export { handleSignup, handleLogin, handleRefreshTokens };

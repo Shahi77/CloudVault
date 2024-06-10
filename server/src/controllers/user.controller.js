@@ -3,7 +3,6 @@ import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import { EMAIL_REGEX } from "../constants.js";
 import { User } from "../models/users.model.js";
-import { uploadOnCloudinary } from "../utils/cloudinary.js";
 import { generateToken } from "../utils/jwt.js";
 import { AUTH_COOKIE_OPTIONS } from "../config/cookies.config.js";
 

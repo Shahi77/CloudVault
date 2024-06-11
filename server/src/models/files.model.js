@@ -8,7 +8,11 @@ const fileSchema = new mongoose.Schema(
       required: true,
       index: true,
     },
-    file: {
+    fileId: {
+      type: String,
+      required: true,
+    },
+    fileUrl: {
       type: String, // cloudinary URL
       required: true,
     },

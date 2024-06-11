@@ -66,6 +66,8 @@ Change `.env.example` file to `.env` and add the following required variables:
 
 ## API Reference
 
+Test API Endpoints: [Postman Collection](https://www.postman.com/altimetry-saganist-53324669/workspace/github/collection/17929702-302bbd1f-732e-4e6c-9356-435188f655c1?action=share&creator=17929702&active-environment=17929702-658cced1-cde0-411b-91a3-22e346d64490)
+
 ```http
 POST /api/v1/user/signup
 ```
@@ -84,3 +86,20 @@ POST /api/v1/user/login
 | :--------- | :------- | :------------------------------------------ |
 | `email`    | `String` | Email of the user passed in request body    |
 | `password` | `String` | Password of the user passed in request body |
+
+```http
+POST /api/v1/files/upload
+```
+
+| Parameter      | Type     | Description                         |
+| :------------- | :------- | :---------------------------------- |
+| `fileName`     | `String` | Name of the file to be stored in DB |
+| `uploadedFile` | `File`   | File to be uploaded                 |
+
+```http
+POST /api/v1/files/delete/:fileId
+```
+
+| Parameter | Type            | Description                                   |
+| :-------- | :-------------- | :-------------------------------------------- |
+| `fileId`  | `Request Param` | ID of the file which is to be deleted from DB |

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./homePage.css";
+import Upload from "../../components/upload/upload";
 
 export default function HomePage() {
   const [selectedOption, setSelectedOption] = useState("upload");
@@ -33,6 +34,8 @@ export default function HomePage() {
           <span className="name">Search</span>
         </label>
       </div>
+      {selectedOption === "upload" && <Upload />}
+      {selectedOption === "search" && <div>Search Component Placeholder</div>}
     </div>
   );
 }

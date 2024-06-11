@@ -11,6 +11,7 @@ const fileSchema = new mongoose.Schema(
     fileId: {
       type: String,
       required: true,
+      index: true,
     },
     fileUrl: {
       type: String, // cloudinary URL

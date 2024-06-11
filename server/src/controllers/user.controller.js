@@ -14,7 +14,7 @@ const generateAccessAndRefreshTokens = async (userId) => {
   await User.updateOne(
     { _id: userId },
     {
-      $set: { refreshToken },
+      $set: { generatedRefreshToken },
     }
   );
 
@@ -90,7 +90,7 @@ const handleLogin = asyncHandler(async (req, res) => {
   }
 
   const { generatedAccessToken, generatedRefreshToken } =
-    generateAccessAndRefreshTokens(user._id);
+    await generateAccessAndRefreshTokens(user._id);
 
   return res
     .status(200)

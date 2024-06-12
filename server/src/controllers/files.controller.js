@@ -2,6 +2,7 @@ import asyncHandler from "../utils/asyncHandler.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
 import {
+  deleteFileOnCloudinary,
   getCloudinaryPublicId,
   uploadOnCloudinary,
 } from "../utils/cloudinary.js";
@@ -45,4 +46,30 @@ const handleUploadFile = asyncHandler(async (req, res) => {
   );
 });
 
-export { handleUploadFile };
+const handleDeleteFile = asyncHandler(async (req, res) => {
+  const { fileId } = req.params;
+  const user = req.user;
+
+  if (!fileId) {
+    throw new ApiError(400, "Please pass a file id to delete");
+  }
+
+  const file = await File.findOne({ fileId: fileId });
+  if (!file) {
+    throw new ApiError(404, "No such file found");
+  }
+
+  if (file.owner.toString() !== user._id.toString()) {
+    throw new ApiError(401, "Unauthorized Request");
+  }
+
+  await deleteFileOnCloudinary(fileId);
+
+  await File.deleteOne({ fileId: fileId });
+
+  return res
+    .status(200)
+    .json(new ApiResponse({ fileId: fileId }, "File deleted successfully"));
+});
+
+export { handleUploadFile, handleDeleteFile };

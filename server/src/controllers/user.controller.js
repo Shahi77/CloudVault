@@ -14,7 +14,7 @@ const generateAccessAndRefreshTokens = async (userId) => {
   await User.updateOne(
     { _id: userId },
     {
-      $set: { generatedRefreshToken },
+      $set: { refreshToken: generatedRefreshToken },
     }
   );
 

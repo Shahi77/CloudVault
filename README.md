@@ -4,6 +4,7 @@ A webapp which lets users upload their files on cloud without any hassle and the
 
 ## Folder Structure of Server
 
+```
 .
 ├── package-lock.json
 ├── package.json
@@ -38,6 +39,7 @@ A webapp which lets users upload their files on cloud without any hassle and the
 ├── asyncHandler.js
 ├── cloudinary.js
 └── jwt.js
+```
 
 ## Run Locally
 

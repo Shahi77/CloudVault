@@ -109,7 +109,7 @@ const handleLogin = asyncHandler(async (req, res) => {
 });
 
 const handleRefreshTokens = asyncHandler(async (req, res) => {
-  const { refreshToken } = req.cookies;
+  const refreshToken = req.cookies.refreshToken || req.headers["refresh-token"];
   if (!refreshToken) {
     throw new ApiError(401, "Unauthorized Request");
   }
@@ -139,12 +139,14 @@ const handleRefreshTokens = asyncHandler(async (req, res) => {
       .json(
         new ApiResponse(
           {
-            accessToken: generatedAccessToken,
+            updatedAccessToken: generatedAccessToken,
+            updatedRefreshToken: generatedRefreshToken,
           },
           "Refreshed tokens successfully"
         )
       );
   } catch (error) {
+    console.log(error);
     throw new ApiError(401, "Invalid refresh token");
   }
 });

@@ -78,6 +78,18 @@ POST /api/v1/user/signup
 | `fullName` | `String` | Full Name of the user passed in request body |
 | `password` | `String` | Password of the user passed in request body  |
 
+```javascript
+Content-Type: application/json
+{
+    "data": {
+        "id": "666d46172c06acee55d5febb",
+        "fullName": "Test User 4",
+        "email": "test4@test.com"
+    },
+    "message": "User registered successfully"
+}
+```
+
 ```http
 POST /api/v1/user/login
 ```
@@ -86,6 +98,18 @@ POST /api/v1/user/login
 | :--------- | :------- | :------------------------------------------ |
 | `email`    | `String` | Email of the user passed in request body    |
 | `password` | `String` | Password of the user passed in request body |
+
+```javascript
+Content-Type: application/json
+{
+    "data": {
+        "id": "66654815ec3cd03bd3954958",
+        "fullName": "Test User 1",
+        "email": "test1@test.com"
+    },
+    "message": "Logged in successfully"
+}
+```
 
 ```http
 POST /api/v1/files/upload
@@ -96,10 +120,60 @@ POST /api/v1/files/upload
 | `fileName`     | `String` | Name of the file to be stored in DB |
 | `uploadedFile` | `File`   | File to be uploaded                 |
 
+```javascript
+Content-Type: application/json
+{
+    "data": {
+        "name": "Luffy Gear 5 Pfp ",
+        "fileUrl": "http://res.cloudinary.com/anujthakur513/image/upload/v1718430778/cloud-vault/files/lmsbnfmx2tq8fpv3qbnj.jpg",
+        "fileId": "lmsbnfmx2tq8fpv3qbnj"
+    },
+    "message": "file uploaded successfully"
+}
+```
+
 ```http
-POST /api/v1/files/delete/:fileId
+DELETE /api/v1/files/delete/:fileId
 ```
 
 | Parameter | Type            | Description                                   |
 | :-------- | :-------------- | :-------------------------------------------- |
 | `fileId`  | `Request Param` | ID of the file which is to be deleted from DB |
+
+```javascript
+Content-Type: application/json
+{
+    "data": {
+        "fileId": "uysoey9wih4tc6aampup"
+    },
+    "message": "File deleted successfully"
+}
+```
+
+```http
+GET /api/v1/files
+```
+
+| Parameter | Type | Description |
+| :-------- | :--- | :---------- |
+| na        | na   | na          |
+
+```javascript
+Content-Type: application/json
+{
+    "data": {
+        "files": [
+            {
+                "_id": "666d2c3a6b61a48df0b3c78e",
+                "name": "Luffy Gear 5 Pfp ",
+                "fileId": "lmsbnfmx2tq8fpv3qbnj",
+                "fileUrl": "http://res.cloudinary.com/anujthakur513/image/upload/v1718430778/cloud-vault/files/lmsbnfmx2tq8fpv3qbnj.jpg",
+                "owner": "66654815ec3cd03bd3954958",
+                "createdAt": "2024-06-15T05:52:58.421Z",
+                "__v": 0
+            }
+        ]
+    },
+    "message": "files fetched successfully"
+}
+```

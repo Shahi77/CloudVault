@@ -2,6 +2,45 @@
 
 A webapp which lets users upload their files on cloud without any hassle and they can search for files using the name that they set while uploading
 
+## Folder Structure of Server
+
+```
+.
+├── package-lock.json
+├── package.json
+├── public
+│   └── temp
+└── src
+├── app.js
+├── config
+│   ├── cloudinary.config.js
+│   ├── cookies.config.js
+│   └── rateLimit.config.js
+├── constants.js
+├── controllers
+│   ├── files.controller.js
+│   └── user.controller.js
+├── index.js
+├── middlewares
+│   ├── auth.middleware.js
+│   └── multer.middleware.js
+├── models
+│   ├── files.model.js
+│   └── users.model.js
+├── routes
+│   ├── files.routes.js
+│   ├── user.routes.js
+│   └── version1.routes.js
+├── services
+│   └── db.js
+└── utils
+├── ApiError.js
+├── ApiResponse.js
+├── asyncHandler.js
+├── cloudinary.js
+└── jwt.js
+```
+
 ## Run Locally
 
 ### Clone the project

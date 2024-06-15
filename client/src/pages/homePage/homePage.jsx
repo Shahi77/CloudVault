@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./homePage.css";
 import Upload from "../../components/upload/upload";
+import Search from "../../components/search/search";
 
 export default function HomePage() {
   const [selectedOption, setSelectedOption] = useState("upload");
@@ -11,7 +12,7 @@ export default function HomePage() {
 
   return (
     <div className="radio-inputs-container">
-      <h2>Secure upload and instant search</h2>
+      <h2>Secure upload and Instant search</h2>
       <div className="radio-inputs">
         <label className="radio">
           <input
@@ -31,11 +32,11 @@ export default function HomePage() {
             checked={selectedOption === "search"}
             onChange={handleOptionChange}
           />
-          <span className="name">Search</span>
+          <span className="name">Show files</span>
         </label>
       </div>
       {selectedOption === "upload" && <Upload />}
-      {selectedOption === "search" && <div>Search Component Placeholder</div>}
+      {selectedOption === "search" && <Search />}
     </div>
   );
 }

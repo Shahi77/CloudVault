@@ -1,0 +1,116 @@
+
+/* Styling for the container and show files label */
+.search-container {
+    text-align: center;
+    margin: 200px;
+    font-size: 30px;
+}
+
+.show-files-label {
+    cursor: pointer;
+    color: rgba(51, 65, 85, 1);
+    /* Using the provided color palette */
+    font-weight: 600;
+    padding: 10px;
+    border-radius: 0.5rem;
+    background-color: #EEE;
+    transition: background-color 0.3s;
+}
+
+.show-files-label:hover {
+    background-color: #fff;
+    box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+}
+
+.search-input-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.search-label {
+    margin-right: 10px;
+    font-size: 24px;
+    color: rgba(51, 65, 85, 1);
+}
+
+.search-input {
+    padding: 10px;
+    font-size: 24px;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+}
+/* Styling for the button group */
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.button-group button {
+    flex: 1 1 auto;
+    padding: 0.5rem 1rem;
+    font-size: 24px;
+    cursor: pointer;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #EEE;
+    color: rgba(51, 65, 85, 1);
+    transition: all 0.15s ease-in-out;
+}
+
+.button-group button:hover {
+    background-color: #fff;
+    box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+    font-weight: 600;
+}
+
+/* Additional styling for radio inputs */
+.radio-inputs-container {
+    text-align: center;
+    margin: 200px;
+    font-size: 30px;
+}
+
+.radio-inputs {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0.5rem;
+    background-color: #EEE;
+    box-sizing: border-box;
+    box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
+    padding: 0.25rem;
+    width: 400px;
+    font-size: 24px;
+}
+
+.radio-inputs .radio {
+    flex: 1 1 auto;
+    text-align: center;
+}
+
+.radio-inputs .radio input {
+    display: none;
+}
+
+.radio-inputs .radio .name {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    border: none;
+    padding: 0.5rem 0;
+    color: rgba(51, 65, 85, 1);
+    transition: all 0.15s ease-in-out;
+}
+
+.radio-inputs .radio input:checked+.name {
+    background-color: #fff;
+        font-weight: 600;
+}
+

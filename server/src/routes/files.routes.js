@@ -1,6 +1,7 @@
 import { Router } from "express";
 import {
   handleDeleteFile,
+  handleGetAllFiles,
   handleUploadFile,
 } from "../controllers/files.controller.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -15,6 +16,7 @@ filesRouter.post(
   handleUploadFile
 );
 
-filesRouter.post("/delete/:fileId", verifyToken, handleDeleteFile);
+filesRouter.delete("/delete/:fileId", verifyToken, handleDeleteFile);
+filesRouter.get("/", verifyToken, handleGetAllFiles);
 
 export default filesRouter;

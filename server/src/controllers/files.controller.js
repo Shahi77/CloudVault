@@ -72,12 +72,6 @@ const handleDeleteFile = asyncHandler(async (req, res) => {
     .json(new ApiResponse({ fileId: fileId }, "File deleted successfully"));
 });
 
-/**
- * Remaining API endpoints
- * TODO: download file
- * ? Do we need a separate share endpoint -> no because we'll return everything in get all files
- */
-
 const handleGetAllFiles = asyncHandler(async (req, res) => {
   const user = req.user;
   if (!user) {

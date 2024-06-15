@@ -72,4 +72,25 @@ const handleDeleteFile = asyncHandler(async (req, res) => {
     .json(new ApiResponse({ fileId: fileId }, "File deleted successfully"));
 });
 
-export { handleUploadFile, handleDeleteFile };
+/**
+ * Remaining API endpoints
+ * TODO: download file
+ * ? Do we need a separate share endpoint -> no because we'll return everything in get all files
+ */
+
+const handleGetAllFiles = asyncHandler(async (req, res) => {
+  const user = req.user;
+  if (!user) {
+    throw new ApiError(401, "Unauthorized Request");
+  }
+
+  const files = await File.find({ owner: user._id })
+    .select("-updatedAt")
+    .sort({ createdAt: 1 });
+
+  return res
+    .status(200)
+    .json(new ApiResponse({ files }, "files fetched successfully"));
+});
+
+export { handleUploadFile, handleDeleteFile, handleGetAllFiles };

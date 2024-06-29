@@ -1,7 +1,5 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-//import checkValidateData from "../utils/validate";
-
 import "./login.css";
 import checkValidateData from "../../utils/validate";
 

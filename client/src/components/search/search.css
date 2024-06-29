@@ -1,5 +1,4 @@
 
-/* Styling for the container and show files label */
 .search-container {
     text-align: center;
     margin: 200px;
@@ -64,8 +63,6 @@
     box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.06);
     font-weight: 600;
 }
-
-/* Additional styling for radio inputs */
 .radio-inputs-container {
     text-align: center;
     margin: 200px;

@@ -151,4 +151,12 @@ const handleRefreshTokens = asyncHandler(async (req, res) => {
   }
 });
 
-export { handleSignup, handleLogin, handleRefreshTokens };
+const handleCheckAuth = (req, res) => {
+  if (req.user) {
+    res.status(200).json(new ApiResponse({}, "User is authenticated"));
+  } else {
+    res.status(401).json(new ApiResponse({}, "User is not authenticated"));
+  }
+};
+
+export { handleSignup, handleLogin, handleRefreshTokens, handleCheckAuth };

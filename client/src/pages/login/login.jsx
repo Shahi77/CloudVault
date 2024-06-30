@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./login.css";
 import axios from "axios";
 import checkValidateData from "../../utils/validate";
@@ -10,7 +10,7 @@ const Login = () => {
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const fullNameRef = useRef(null);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const toggleSignIn = () => {
     setIsSignIn(!isSignIn);
@@ -33,15 +33,17 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        isSignIn ? "/api/login" : "/api/signup",
-        isSignIn ? { email, password } : { email, password, fullName }
+        isSignIn ? "/api/v1/user/login" : "/api/v1/user/signup",
+        isSignIn ? { email, password } : { email, password, fullName },
+        { withCredentials: true } // Enable cookies
       );
 
       document.cookie = `accessToken=${response.data.data.accessToken}; path=/`;
       document.cookie = `refreshToken=${response.data.data.refreshToken}; path=/`;
-      history.push("/dashboard");
+      setIsLoggedIn(true);
+      navigate("/"); // Redirect to home page
     } catch (error) {
-      setErrorMessage(error.response.data.message || "An error occurred");
+      setErrorMessage(error.response?.data?.message || "An error occurred");
     }
   };
 

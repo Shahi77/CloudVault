@@ -5,10 +5,12 @@ const checkValidateData = (email, password, fullName) => {
     email
   );
   const isPasswordValid =
-    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(password);
-
+    /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/.test(
+      password
+    );
   if (!isEmailValid) return "Email ID is not valid";
-  if (!isPasswordValid) return "Password is not valid";
+  if (!isPasswordValid)
+    return "Password must contain at least one Uppercase, number and a special character";
 
   if (isEmailValid && isPasswordValid) {
     return null;

@@ -2,12 +2,6 @@ import React, { useState } from "react";
 import "./search.css";
 
 export default function Search() {
-  const [showButtons, setShowButtons] = useState(false);
-
-  const handleShowFilesClick = () => {
-    setShowButtons(true);
-  };
-
   const handleSearchClick = () => {
     alert("Search functionality not implemented yet.");
   };

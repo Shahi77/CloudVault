@@ -2,12 +2,6 @@ import React, { useState } from "react";
 import "./search.css";
 
 export default function Search() {
-  const [showButtons, setShowButtons] = useState(false);
-
-  const handleShowFilesClick = () => {
-    setShowButtons(true);
-  };
-
   const handleSearchClick = () => {
     alert("Search functionality not implemented yet.");
   };
@@ -22,24 +16,19 @@ export default function Search() {
 
   return (
     <div className="search-container">
-      {!showButtons && (
-        <label className="show-files-label" onClick={handleShowFilesClick}>
-          Show files
-        </label>
-      )}
-      {showButtons && (
-        <div>
-          <div className="search-input-container">
-            <span className="search-label">Enter Filename to search:</span>
-            <input type="text" className="search-input" />
-          </div>
-          <div className="button-group">
-            <button onClick={handleSearchClick}>Search</button>
-            <button onClick={handleDownloadClick}>Download</button>
-            <button onClick={handleShareClick}>Share</button>
-          </div>
+      <div>
+        <div className="search-input-container">
+          <label htmlFor="filename" className="search-label">
+            Enter Filename to search:
+          </label>
+          <input type="text" id="filename" className="search-input" />
         </div>
-      )}
+        <div className="button-group">
+          <button onClick={handleSearchClick}>Search</button>
+          <button onClick={handleDownloadClick}>Download</button>
+          <button onClick={handleShareClick}>Share</button>
+        </div>
+      </div>
     </div>
   );
 }

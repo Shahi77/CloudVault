@@ -1,4 +1,6 @@
-const checkValidateData = (email, password) => {
+const checkValidateData = (email, password, fullName) => {
+  if (fullName !== null && fullName.trim() === "")
+    return "Full Name is required";
   const isEmailValid = /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/.test(
     email
   );

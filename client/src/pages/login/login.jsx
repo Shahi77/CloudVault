@@ -4,10 +4,9 @@ import "./login.css";
 import axios from "axios";
 import checkValidateData from "../../utils/validate";
 
-const Login = () => {
+const Login = ({ setIsLoggedIn }) => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-  //const [isLoggedIn, setIsLoggedIn] = useState(false);
   const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const fullNameRef = useRef(null);
@@ -40,9 +39,11 @@ const Login = () => {
         isSignIn ? { email, password } : { email, password, fullName },
         { withCredentials: true } // Enable cookies
       );
+      document.cookie = `accessToken=${response.data.data.accessToken}; path=/`;
+      document.cookie = `refreshToken=${response.data.data.refreshToken}; path=/`;
+      setIsLoggedIn(true);
       navigate("/"); // Redirect to home page
     } catch (error) {
-      // setErrorMessage(error.response?.data?.message || "An error occurred");
       console.error("Error occurred during authentication:", error);
       setErrorMessage(error.message || "An error occurred");
     }

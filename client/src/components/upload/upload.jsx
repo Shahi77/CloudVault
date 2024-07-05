@@ -7,28 +7,29 @@ export default function Upload() {
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
-
-  // const handleUpload = () => {
-  //   if (file) {
-  //     console.log("File to upload:", file);
-  //     alert(`File ${file.name} is ready to be uploaded.`);
-  //   } else {
-  //     alert("Please choose a file first.");
-  //   }
-  // };
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  };
   const handleUpload = async () => {
     if (file) {
       const formData = new FormData();
       formData.append("uploadedFile", file);
-      formData.append("fileName", file.name);
 
       try {
+        const token = getCookie("accessToken");
+        if (!token) {
+          alert("No token found. Please log in.");
+          return;
+        }
+
         const response = await fetch(
           "http://localhost:8000/api/v1/files/upload",
           {
             method: "POST",
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`, // Add authorization header if required
+              Authorization: `Bearer ${token}`,
             },
             body: formData,
           }
@@ -48,6 +49,7 @@ export default function Upload() {
       alert("Please choose a file first.");
     }
   };
+
   return (
     <div className="upload-container">
       <div className="file-actions">
